@@ -165,7 +165,9 @@ NotImplemented
 
 
 Ellipsis
-   .. index:: object: Ellipsis
+   .. index::
+      object: Ellipsis
+      single: ...; ellipsis literal
 
    This type has a single value.  There is a single object with this value. This
    object is accessed through the literal ``...`` or the built-in name
@@ -1059,9 +1061,9 @@ Internal types
       trace (towards the frame where the exception occurred), or ``None`` if
       there is no next level.
 
-    .. versionchanged:: 3.7
-       Traceback objects can now be explicitly instantiated from Python code,
-       and the ``tb_next`` attribute of existing instances can be updated.
+      .. versionchanged:: 3.7
+         Traceback objects can now be explicitly instantiated from Python code,
+         and the ``tb_next`` attribute of existing instances can be updated.
 
    Slice objects
       .. index:: builtin: slice
@@ -1831,8 +1833,9 @@ Metaclasses
 ^^^^^^^^^^^
 
 .. index::
-    single: metaclass
-    builtin: type
+   single: metaclass
+   builtin: type
+   single: = (equals); class definition
 
 By default, classes are constructed using :func:`type`. The class body is
 executed in a new namespace and the class name is bound locally to the

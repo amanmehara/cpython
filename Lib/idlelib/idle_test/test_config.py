@@ -255,9 +255,9 @@ class IdleConfTest(unittest.TestCase):
                 with self.assertRaises(FileNotFoundError):
                     conf.GetUserCfgDir()
 
-    @unittest.skipIf(not sys.platform.startswith('win'), 'this is test for windows system')
+    @unittest.skipIf(not sys.platform.startswith('win'), 'this is test for Windows system')
     def test_get_user_cfg_dir_windows(self):
-        "Test to get user config directory under windows"
+        "Test to get user config directory under Windows"
         conf = self.new_config(_utest=True)
 
         # Check normal way should success
@@ -356,11 +356,11 @@ class IdleConfTest(unittest.TestCase):
 
         self.assertCountEqual(
             conf.GetSectionList('default', 'main'),
-            ['General', 'EditorWindow', 'Indent', 'Theme',
+            ['General', 'EditorWindow', 'PyShell', 'Indent', 'Theme',
              'Keys', 'History', 'HelpFiles'])
         self.assertCountEqual(
             conf.GetSectionList('user', 'main'),
-            ['General', 'EditorWindow', 'Indent', 'Theme',
+            ['General', 'EditorWindow', 'PyShell', 'Indent', 'Theme',
              'Keys', 'History', 'HelpFiles'])
 
         with self.assertRaises(config.InvalidConfigSet):
@@ -452,7 +452,7 @@ class IdleConfTest(unittest.TestCase):
 
         self.assertCountEqual(
             conf.RemoveKeyBindNames(conf.GetSectionList('default', 'extensions')),
-            ['AutoComplete', 'CodeContext', 'FormatParagraph', 'ParenMatch','ZzDummy'])
+            ['AutoComplete', 'CodeContext', 'FormatParagraph', 'ParenMatch', 'ZzDummy'])
 
     def test_get_extn_name_for_event(self):
         userextn.read_string('''

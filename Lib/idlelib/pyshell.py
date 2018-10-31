@@ -12,11 +12,11 @@ except ImportError:
 # Valid arguments for the ...Awareness call below are defined in the following.
 # https://msdn.microsoft.com/en-us/library/windows/desktop/dn280512(v=vs.85).aspx
 if sys.platform == 'win32':
-    import ctypes
-    PROCESS_SYSTEM_DPI_AWARE = 1
     try:
+        import ctypes
+        PROCESS_SYSTEM_DPI_AWARE = 1
         ctypes.OleDLL('shcore').SetProcessDpiAwareness(PROCESS_SYSTEM_DPI_AWARE)
-    except (AttributeError, OSError):
+    except (ImportError, AttributeError, OSError):
         pass
 
 import tkinter.messagebox as tkMessageBox
@@ -852,10 +852,14 @@ class PyShell(OutputWindow):
         ("edit", "_Edit"),
         ("debug", "_Debug"),
         ("options", "_Options"),
-        ("windows", "_Window"),
+        ("window", "_Window"),
         ("help", "_Help"),
     ]
 
+    # Extend right-click context menu
+    rmenu_specs = OutputWindow.rmenu_specs + [
+        ("Squeeze", "<<squeeze-current-text>>"),
+    ]
 
     # New classes
     from idlelib.history import History
@@ -1033,7 +1037,7 @@ class PyShell(OutputWindow):
         return self.shell_title
 
     COPYRIGHT = \
-          'Type "copyright", "credits" or "license()" for more information.'
+          'Type "help", "copyright", "credits" or "license()" for more information.'
 
     def begin(self):
         self.text.mark_set("iomark", "insert")

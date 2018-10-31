@@ -177,7 +177,7 @@ Directory and files operations
 .. function:: copy2(src, dst, *, follow_symlinks=True)
 
    Identical to :func:`~shutil.copy` except that :func:`copy2`
-   also attempts to preserve all file metadata.
+   also attempts to preserve file metadata.
 
    When *follow_symlinks* is false, and *src* is a symbolic
    link, :func:`copy2` attempts to copy all metadata from the
@@ -343,12 +343,15 @@ Directory and files operations
 
    Return disk usage statistics about the given path as a :term:`named tuple`
    with the attributes *total*, *used* and *free*, which are the amount of
-   total, used and free space, in bytes.  On Windows, *path* must be a
-   directory; on Unix, it can be a file or directory.
+   total, used and free space, in bytes. *path* may be a file or a
+   directory.
 
    .. versionadded:: 3.3
 
-   Availability: Unix, Windows.
+   .. versionchanged:: 3.8
+     On Windows, *path* can now be a file or directory.
+
+   .. availability:: Unix, Windows.
 
 .. function:: chown(path, user=None, group=None)
 
@@ -359,7 +362,7 @@ Directory and files operations
 
    See also :func:`os.chown`, the underlying function.
 
-   Availability: Unix.
+   .. availability:: Unix.
 
    .. versionadded:: 3.3
 
@@ -407,10 +410,14 @@ efficiently (see :issue:`33671`).
 "fast-copy" means that the copying operation occurs within the kernel, avoiding
 the use of userspace buffers in Python as in "``outfd.write(infd.read())``".
 
-On OSX `fcopyfile`_ is used to copy the file content (not metadata).
+On macOS `fcopyfile`_ is used to copy the file content (not metadata).
 
 On Linux, Solaris and other POSIX platforms where :func:`os.sendfile` supports
 copies between 2 regular file descriptors :func:`os.sendfile` is used.
+
+On Windows :func:`shutil.copyfile` uses a bigger default buffer size (1 MiB
+instead of 16 KiB) and a :func:`memoryview`-based variant of
+:func:`shutil.copyfileobj` is used.
 
 If the fast-copy operation fails and no data was written in the destination
 file then shutil will silently fallback on using less efficient
